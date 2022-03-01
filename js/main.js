@@ -22,21 +22,27 @@ const notFound = () => {
     document.getElementById('not-found').style.display = 'block';
 };
 
+let showMore = false;
+
 async function loadData(search) {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${search}`);
     const data = await res.json();
-    await showData(data.data.slice(0, 20));
+    await showData(data.data);
 }
 
 const showData = data => {
-    console.log(data);
-
+    document.getElementById('phone-container').innerHTML = '';
     const div = document.createElement('div');
     div.classList.add('g-5', 'row');
 
     data.forEach(el => {
         const childDiv = document.createElement('div');
         childDiv.classList.add('col-12', 'col-md-4');
+
+        if (!showMore && data.indexOf(el) > 19) {
+            childDiv.classList.add('d-none', 'extra-data');
+        }
+
         childDiv.innerHTML = `
             <div class="bg-light card px-2 py-3">
                 <div class="card-body">
@@ -49,6 +55,18 @@ const showData = data => {
         div.appendChild(childDiv);
     });
 
+    if (data.length > 20) {
+        const element = document.createElement('div');
+        element.classList.add('col-12', 'col-md-4', 'px-2', 'py-3');
+
+        if (showMore) {
+            element.innerHTML = '<button class="btn" onclick="moreData()" id="more-or-less">Show less <i class="fa-solid fa-arrow-left"></i></button>';
+        } else {
+            element.innerHTML = '<button class="btn" onclick="moreData()" id="more-or-less">Show more <i class="fa-solid fa-arrow-right"></i></button>';
+        }
+
+        div.appendChild(element);
+    }
     setTimeout(addData, 750, div);
 };
 
@@ -65,7 +83,6 @@ async function loadDetails(slug) {
 }
 
 const showDetails = data => {
-    console.log(data);
     const div = document.getElementById('details-container');
     div.innerHTML = `
     <div>
@@ -109,3 +126,23 @@ function arrayToString(array) {
     }
     return returned.slice(0, returned.length - 2);
 }
+
+const moreData = () => {
+    if (showMore) {
+        const extraData = document.getElementsByClassName('extra-data');
+        console.log(extraData);
+        Array.from(extraData).forEach(el => {
+            el.classList.add('d-none');
+        });
+        document.getElementById('more-or-less').innerHTML = 'Show more <i class="fa-solid fa-arrow-right"></i>';
+        showMore = false;
+    } else {
+        const extraData = document.getElementsByClassName('extra-data');
+        console.log(extraData);
+        Array.from(extraData).forEach(el => {
+            el.classList.remove('d-none');
+        });
+        document.getElementById('more-or-less').innerHTML = '<i class="fa-solid fa-arrow-left"></i> Show less';
+        showMore = true;
+    }
+};
