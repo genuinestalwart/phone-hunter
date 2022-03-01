@@ -12,6 +12,12 @@ span {
 #loading-spinner, #not-found {
     display: none;
 }
+.card {
+    background-color: #F0FFFF;
+}
+.btn {
+    background-color: #7b68ee;
+}
 
 @media only screen and (min-width: 768px) {
     .input-group {

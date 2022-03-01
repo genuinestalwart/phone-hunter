@@ -1,6 +1,7 @@
 window.addEventListener('load', () => {
     document.getElementById('search-button').addEventListener('click', () => {
         const search = document.getElementById('search-input').value;
+        document.getElementById('phone-container').innerHTML = '';
         setTimeout(loadingSpinner, 125);
 
         if (search === '') {
@@ -52,12 +53,12 @@ const showData = data => {
         }
 
         childDiv.innerHTML = `
-            <div class="bg-light card px-2 py-3">
+            <div class="border border-secondary card px-2 py-3 rounded-3 shadow">
                 <div class="card-body">
                     <div><img class="d-block mx-auto rounded-3 w-50" src="${el.image}" alt="${el.phone_name}"></div>
                     <h4 class="card-title mb-0 mt-4">${el.phone_name}</h4>
                     <p class="card-text mt-2">${el.brand}</p>
-                    <button class="btn btn-primary" onclick="loadDetails('${el.slug}')">Details</button>
+                    <button class="btn text-white" onclick="loadDetails('${el.slug}')">Details</button>
                 </div>
             </div>`;
         div.appendChild(childDiv);
@@ -69,9 +70,9 @@ const showData = data => {
         element.classList.add('col-12', 'col-md-4', 'px-2', 'py-3');
 
         if (showMore) {
-            element.innerHTML = '<button class="btn" onclick="moreData()" id="more-or-less">Show less <i class="fa-solid fa-arrow-left"></i></button>';
+            element.innerHTML = '<button class="btn text-white" onclick="moreData()" id="more-or-less">Show less <i class="fa-solid fa-arrow-left"></i></button>';
         } else {
-            element.innerHTML = '<button class="btn" onclick="moreData()" id="more-or-less">Show more <i class="fa-solid fa-arrow-right"></i></button>';
+            element.innerHTML = '<button class="btn text-white" onclick="moreData()" id="more-or-less">Show more <i class="fa-solid fa-arrow-right"></i></button>';
         }
 
         div.appendChild(element);
@@ -121,7 +122,7 @@ const showDetails = data => {
         </ul>
         ` : ''}
     </div>
-    <div class="text-end"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button></div>`;
+    <div class="text-end"><button type="button" class="btn text-white" data-bs-dismiss="modal">Ok</button></div>`;
 
     const modalDetails = new bootstrap.Modal(document.getElementById('modal-details'));
     modalDetails.show();
