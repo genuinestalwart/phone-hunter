@@ -30,14 +30,19 @@
 
         <h3 class="fw-bold mb-0 my-5 text-center" id="not-found">Phone not found!</h3>
 
+        <section class="container-fluid my-5" id="details-container">
+
+        </section>
+
         <section class="container-fluid my-5" id="phone-container">
             <!-- <div class="g-5 row">
                 <div class="col-12 col-md-4">
-                    <div class="border border-primary h-100 p-3 rounded-3 phone">
-                        <div><img class="rounded-3" src="" alt=""></div>
-                        <div>
-                            <h4 class="mt-4"></h4>
-                            <p></p>
+                    <div class="bg-light card px-2 py-3 phone">
+                        <div class="card-body">
+                            <div><img class=" d-block mx-auto rounded-3 w-50" src="" alt=""></div>
+                            <h4 class="card-title mt-4"></h4>
+                            <p class="card-text"></p>
+                            <button class="btn btn-info" onclick="showDetails(${el.slug})">Details</button>
                         </div>
                     </div>
                 </div>

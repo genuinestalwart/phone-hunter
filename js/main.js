@@ -40,9 +40,10 @@ const showData = data => {
         childDiv.innerHTML = `
             <div class="bg-light card px-2 py-3 phone">
                 <div class="card-body">
-                <div><img class=" d-block mx-auto rounded-3 w-50" src="${el.image}" alt="${el.phone_name}"></div>
-                <h4 class="card-title mt-4">${el.phone_name}</h4>
-                <p class="card-text">${el.brand}</p>
+                    <div><img class=" d-block mx-auto rounded-3 w-50" src="${el.image}" alt="${el.phone_name}"></div>
+                    <h4 class="card-title mt-4">${el.phone_name}</h4>
+                    <p class="card-text">${el.brand}</p>
+                    <button class="btn btn-primary" onclick="showDetails(${el.slug})">Details</button>
                 </div>
             </div>`;
         div.appendChild(childDiv);
