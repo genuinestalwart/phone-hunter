@@ -38,12 +38,12 @@ const showData = data => {
         const childDiv = document.createElement('div');
         childDiv.classList.add('col-12', 'col-md-4');
         childDiv.innerHTML = `
-            <div class="bg-light card px-2 py-3 phone">
+            <div class="bg-light card px-2 py-3">
                 <div class="card-body">
-                    <div><img class=" d-block mx-auto rounded-3 w-50" src="${el.image}" alt="${el.phone_name}"></div>
-                    <h4 class="card-title mt-4">${el.phone_name}</h4>
-                    <p class="card-text">${el.brand}</p>
-                    <button class="btn btn-primary" onclick="showDetails(${el.slug})">Details</button>
+                    <div><img class="d-block mx-auto rounded-3 w-50" src="${el.image}" alt="${el.phone_name}"></div>
+                    <h4 class="card-title mb-0 mt-4">${el.phone_name}</h4>
+                    <p class="card-text mt-2">${el.brand}</p>
+                    <button class="btn btn-primary" onclick="loadDetails('${el.slug}')">Details</button>
                 </div>
             </div>`;
         div.appendChild(childDiv);
@@ -57,3 +57,55 @@ const addData = div => {
     document.getElementById('not-found').style.display = 'none';
     document.getElementById('phone-container').appendChild(div);
 };
+
+async function loadDetails(slug) {
+    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${slug}`);
+    const data = await res.json();
+    await showDetails(data.data);
+}
+
+const showDetails = data => {
+    console.log(data);
+    const div = document.getElementById('details-container');
+    div.innerHTML = `
+    <div>
+        <h3 class="fw-bold my-3">${data.name}</h3>
+        <p class="my-1"><span>Brand:</span> ${data.brand}</p>
+        <p class="my-1"><span>Release date:</span> ${data.releaseDate === '' ? 'unknown' : `${data.releaseDate}`}</p>
+        <h5 class="fw-bold my-3">Main Features</h5>
+        <ul>
+            <li><span>Chipset:</span> ${data.mainFeatures.chipSet}</li>
+            <li><span>Displaysize:</span> ${data.mainFeatures.displaySize}</li>
+            <li><span>Memory:</span> ${data.mainFeatures.memory}</li>
+            <li><span>Sensors:</span> ${arrayToString(data.mainFeatures.sensors)}</li>
+            <li><span>Storage:</span> ${data.mainFeatures.storage}</li>
+        </ul>
+        ${data.others ? `
+        <h5 class="fw-bold my-3">Others</h5>
+        <ul>
+            <li><span>Bluetooth:</span> ${data.others.Bluetooth}</li>
+            <li><span>GPS:</span> ${data.others.GPS}</li>
+            <li><span>NFC:</span> ${data.others.NFC}</li>
+            <li><span>Radio:</span> ${data.others.Radio}</li>
+            <li><span>USB:</span> ${data.others.USB}</li>
+            <li><span>WLAN:</span> ${data.others.WLAN}</li>
+        </ul>
+        ` : ''}
+    </div>
+    <div class="text-end"><button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button></div>`;
+
+    const modalDetails = new bootstrap.Modal(document.getElementById('modal-details'));
+    modalDetails.show();
+};
+
+function arrayToString(array) {
+    let returned = ``;
+    if (array.length === 0) {
+        returned += 'none';
+    } else {
+        for (const el of array) {
+            returned += `${el}, `;
+        }
+    }
+    return returned.slice(0, returned.length - 2);
+}

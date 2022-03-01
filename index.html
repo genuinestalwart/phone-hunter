@@ -30,19 +30,23 @@
 
         <h3 class="fw-bold mb-0 my-5 text-center" id="not-found">Phone not found!</h3>
 
-        <section class="container-fluid my-5" id="details-container">
-
-        </section>
+        <div class="modal fade" id="modal-details" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body p-4" id="details-container"></div>
+                </div>
+            </div>
+        </div>
 
         <section class="container-fluid my-5" id="phone-container">
             <!-- <div class="g-5 row">
                 <div class="col-12 col-md-4">
-                    <div class="bg-light card px-2 py-3 phone">
+                    <div class="bg-light card px-2 py-3">
                         <div class="card-body">
-                            <div><img class=" d-block mx-auto rounded-3 w-50" src="" alt=""></div>
+                            <div><img class="d-block mx-auto rounded-3 w-50" src="" alt=""></div>
                             <h4 class="card-title mt-4"></h4>
                             <p class="card-text"></p>
-                            <button class="btn btn-info" onclick="showDetails(${el.slug})">Details</button>
+                            <button class="btn btn-info" onclick="loadDetails()">Details</button>
                         </div>
                     </div>
                 </div>
