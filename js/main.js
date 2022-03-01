@@ -1,7 +1,6 @@
 window.addEventListener('load', () => {
     document.getElementById('search-button').addEventListener('click', () => {
         const search = document.getElementById('search-input').value;
-        document.getElementById('phone-container').innerHTML = '';
         setTimeout(loadingSpinner, 125);
 
         if (search === '') {
@@ -12,11 +11,13 @@ window.addEventListener('load', () => {
     });
 });
 
+// Loading
 const loadingSpinner = () => {
     document.getElementById('not-found').style.display = 'none';
     document.getElementById('loading-spinner').style.display = 'flex';
 };
 
+// Data not found
 const notFound = () => {
     document.getElementById('loading-spinner').style.display = 'none';
     document.getElementById('not-found').style.display = 'block';
@@ -24,12 +25,19 @@ const notFound = () => {
 
 let showMore = false;
 
+// Get the phone list
 async function loadData(search) {
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${search}`);
     const data = await res.json();
-    await showData(data.data);
+
+    if (data.data.length > 0) {
+        await showData(data.data);
+    } else {
+        setTimeout(notFound, 625);
+    }
 }
 
+// Create the elements for every phone
 const showData = data => {
     document.getElementById('phone-container').innerHTML = '';
     const div = document.createElement('div');
@@ -55,6 +63,7 @@ const showData = data => {
         div.appendChild(childDiv);
     });
 
+// Add show-more button if there are more than 20 phones
     if (data.length > 20) {
         const element = document.createElement('div');
         element.classList.add('col-12', 'col-md-4', 'px-2', 'py-3');
@@ -70,18 +79,21 @@ const showData = data => {
     setTimeout(addData, 750, div);
 };
 
+// Add the whole container to phone-container
 const addData = div => {
     document.getElementById('loading-spinner').style.display = 'none';
     document.getElementById('not-found').style.display = 'none';
     document.getElementById('phone-container').appendChild(div);
 };
 
+// Get the details of a phone
 async function loadDetails(slug) {
     const res = await fetch(`https://openapi.programming-hero.com/api/phone/${slug}`);
     const data = await res.json();
     await showDetails(data.data);
 }
 
+// Add the details in modal and show it
 const showDetails = data => {
     const div = document.getElementById('details-container');
     div.innerHTML = `
@@ -115,6 +127,7 @@ const showDetails = data => {
     modalDetails.show();
 };
 
+// convert sensor data to a string
 function arrayToString(array) {
     let returned = ``;
     if (array.length === 0) {
@@ -127,10 +140,10 @@ function arrayToString(array) {
     return returned.slice(0, returned.length - 2);
 }
 
+// on clicking "Show more" or "Show less" 
 const moreData = () => {
     if (showMore) {
         const extraData = document.getElementsByClassName('extra-data');
-        console.log(extraData);
         Array.from(extraData).forEach(el => {
             el.classList.add('d-none');
         });
@@ -138,7 +151,6 @@ const moreData = () => {
         showMore = false;
     } else {
         const extraData = document.getElementsByClassName('extra-data');
-        console.log(extraData);
         Array.from(extraData).forEach(el => {
             el.classList.remove('d-none');
         });

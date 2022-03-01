@@ -17,9 +17,11 @@
     <script src="./js/main.js"></script>
 </head>
 <body>
-    <header class="align-items-end d-flex justify-content-center"><h1 class="fw-bold mb-0">Find Your Phone</h1></header>
+    <header class="align-items-end d-flex justify-content-center"><h1 class="fw-bold mb-0">Find Your Phone 📱</h1></header>
 
     <main class="container-md">
+        <!-- Search field, loading spinner and error message -->
+
         <div class="input-group mx-md-auto my-5">
             <input type="text" class="form-control" aria-describedby="search-button" id="search-input">
             <button class="btn btn-outline-primary" type="button" id="search-button">Search</button>
@@ -31,6 +33,8 @@
         </div>
 
         <h3 class="fw-bold mb-0 my-5 text-center" id="not-found">Phone not found!</h3>
+
+        <!-- Modal of detailed information -->
 
         <div class="modal fade" id="modal-details" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
